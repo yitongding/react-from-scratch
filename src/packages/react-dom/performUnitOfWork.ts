@@ -1,7 +1,6 @@
 import React from "react";
-import memory from "./memory";
 import { createDom } from "./domUtils";
-import { ReactElement, Fiber } from "../types";
+import { ReactElement, Fiber, memory } from "../internal";
 
 const reconcileChildren: (
   parent: Fiber,
@@ -12,6 +11,8 @@ export const performUnitOfWork = (fiber: Fiber): Fiber | null => {
   if (typeof fiber.type === "function") {
     // for function component
     memory.wipFiber = fiber;
+    memory.hookIndex = 0;
+    memory.wipFiber.hooks = [];
     const children = [fiber.type(fiber.props)];
     reconcileChildren(fiber, children.flat());
   } else {

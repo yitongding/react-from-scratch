@@ -18,7 +18,7 @@ export interface Fiber {
   effectTag: EffectTag;
   sibling?: Fiber | null;
   child?: Fiber | null;
-  hooks?: any[];
+  hooks?: Hook[];
 }
 
 type ReactElementType = HTMLTagName | "TEXT_ELEMENT";
@@ -28,6 +28,11 @@ export interface ReactElement {
     children: ReactElement[];
     [key: string]: any;
   };
+}
+
+export interface Hook<T = any> {
+  state: T;
+  pendingState: T | Symbol;
 }
 
 export type RequestIdleCallbackDeadline = {

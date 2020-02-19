@@ -1,4 +1,4 @@
-import { Fiber, EffectTag, ReactElement } from "../types";
+import { Fiber, EffectTag, ReactElement } from "../internal";
 
 export const reconcileChildren = (
   parent: Fiber,

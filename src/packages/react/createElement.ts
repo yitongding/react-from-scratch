@@ -1,4 +1,4 @@
-import { ReactElement, HTMLTagName } from "../types";
+import { ReactElement, HTMLTagName } from "../internal";
 const createTextElement = (text: string): ReactElement => {
   return {
     type: "TEXT_ELEMENT",
@@ -10,16 +10,12 @@ const createTextElement = (text: string): ReactElement => {
 };
 
 export const createElement = (
-  tagName: HTMLTagName | ((props: any) => ReactElement),
+  tagName: HTMLTagName,
   props: object | null,
   ...children: (ReactElement | string)[]
 ): ReactElement => {
-  if (typeof tagName === "function") {
-    return tagName({ ...props, children });
-  }
-
   return {
-    type: tagName,
+    type: tagName as any,
     props: {
       ...props,
       children: children.map(child =>

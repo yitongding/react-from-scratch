@@ -1,6 +1,5 @@
-import memory from "./memory";
 import { workLoop } from "./workLoop";
-import { ReactElement, EffectTag } from "../types";
+import { ReactElement, EffectTag, memory } from "../internal";
 
 declare function requestIdleCallback(func: any): void;
 

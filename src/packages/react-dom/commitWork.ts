@@ -1,5 +1,5 @@
 import { updateDom, deleteDom } from "./domUtils";
-import { Fiber, EffectTag } from "../types";
+import { Fiber, EffectTag } from "../internal";
 
 export const commitWork = (fiber?: Fiber | null): void => {
   if (!fiber) {
@@ -16,11 +16,15 @@ export const commitWork = (fiber?: Fiber | null): void => {
 
   switch (fiber.effectTag) {
     case EffectTag.PLACEMENT: {
-      parentDom.appendChild(fiber.dom!);
+      if (fiber.dom !== null) {
+        parentDom.appendChild(fiber.dom!);
+      }
       break;
     }
     case EffectTag.UPDATE: {
-      updateDom(fiber.dom!, fiber.alternate?.props, fiber.props);
+      if (fiber.dom !== null) {
+        updateDom(fiber.dom!, fiber.alternate?.props, fiber.props);
+      }
       break;
     }
     case EffectTag.DELETION: {

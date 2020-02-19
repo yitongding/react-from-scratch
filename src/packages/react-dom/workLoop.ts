@@ -1,7 +1,6 @@
-import memory from "./memory";
 import { performUnitOfWork } from "./performUnitOfWork";
 import { commitWork } from "./commitWork";
-import { RequestIdleCallbackDeadline } from "../types";
+import { RequestIdleCallbackDeadline, memory } from "../internal";
 
 declare function requestIdleCallback(func: any): void;
 

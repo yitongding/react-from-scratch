@@ -1,4 +1,4 @@
-import { HTMLTagName, Fiber } from "../types";
+import { HTMLTagName, Fiber } from "../internal";
 
 export const updateDom = (
   dom: Node,
