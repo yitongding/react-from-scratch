@@ -1,22 +1,21 @@
-export const render = (
-  element: ReactElement,
-  container: HTMLElement | Text
-) => {
-  const dom =
-    element.type === "TEXT_ELEMENT"
-      ? document.createTextNode("")
-      : document.createElement(element.type);
+import memory from "./memory";
+import { workLoop } from "./workLoop";
+import { ReactElement, EffectTag } from "../types";
 
-  const isProperty = (key: string) => key !== "children";
-  Object.keys(element.props)
-    .filter(isProperty)
-    .forEach(name => {
-      (dom as any)[name] = element.props[name];
-    });
+declare function requestIdleCallback(func: any): void;
 
-  element.props.children.forEach(
-    child => render(child, dom) // recursive call
-  );
+export const render = (element: ReactElement, container: Node) => {
+  memory.wipRoot = {
+    type: "a",
+    parent: null,
+    dom: container,
+    props: {
+      children: [element]
+    },
+    alternate: memory.currentRoot,
+    effectTag: EffectTag.PLACEMENT
+  };
 
-  container.appendChild(dom);
+  memory.nextUnitOfWork = memory.wipRoot;
+  requestIdleCallback(workLoop);
 };

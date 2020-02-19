@@ -1,3 +1,4 @@
+import { ReactElement, HTMLTagName } from "../types";
 const createTextElement = (text: string): ReactElement => {
   return {
     type: "TEXT_ELEMENT",

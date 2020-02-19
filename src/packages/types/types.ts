@@ -1,16 +1,19 @@
-enum EffectTag {
+export enum EffectTag {
   UPDATE,
   PLACEMENT,
   DELETION
 }
 
-type HTMLTagName = keyof HTMLElementTagNameMap;
+export type HTMLTagName = keyof HTMLElementTagNameMap;
+type FunctionComponent = (
+  props: object
+) => ReactElement | ReactElement[] | null;
 
-interface Fiber {
-  type: ReactElementType;
+export interface Fiber {
+  type: ReactElementType | FunctionComponent;
   props: any;
-  dom: HTMLElement | Text | null;
-  parent: Fiber;
+  dom: Node | null;
+  parent: Fiber | null;
   alternate: Fiber | null;
   effectTag: EffectTag;
   sibling?: Fiber | null;
@@ -19,7 +22,7 @@ interface Fiber {
 }
 
 type ReactElementType = HTMLTagName | "TEXT_ELEMENT";
-interface ReactElement {
+export interface ReactElement {
   type: ReactElementType;
   props: {
     children: ReactElement[];
@@ -27,9 +30,7 @@ interface ReactElement {
   };
 }
 
-type RequestIdleCallbackDeadline = {
+export type RequestIdleCallbackDeadline = {
   readonly didTimeout: boolean;
   timeRemaining: () => number;
 };
-
-declare function requestIdleCallback(func: any): void;
